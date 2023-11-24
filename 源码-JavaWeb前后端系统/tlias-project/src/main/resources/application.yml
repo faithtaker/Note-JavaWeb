@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tlias
+    username: 
+    password: 
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+mybatis:
+  configuration:
+    #执行 SQL 语句操作时在控制台输出日志信息
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #数据库的命名到类的时候转换 a_column ------> aCloumn
+    map-underscore-to-camel-case: true
+
+
+#阿里云OSS配置
+aliyun:
+  oss:
+    endpoint: 
+    accessKeyId: 
+    accessKeySecret: 
+    bucketName: 
+
+#spring事务管理日志:输出详细的调试信息，包括 SQL 语句的执行情况、事务管理的细节等
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug

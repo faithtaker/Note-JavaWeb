@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tliasproject.mapper.EmpMapper">
+
+    <insert id="addData" parameterType="com.example.tliasproject.pojo.Emp">
+        insert into emp (username, name, gender, image, job, entrydate, dept_id, create_time, update_time)
+        values (#{username}, #{name}, #{gender}, #{image}, #{job}, #{entrydate}, #{deptId}, #{createTime},
+                #{updateTime})
+    </insert>
+    <update id="updateData" parameterType="com.example.tliasproject.pojo.Emp">
+        update emp
+        <set>
+            <if test="username != null and username != ''">username=#{username},</if>
+            <if test="name != null and name != ''">name=#{name},</if>
+            <if test="image != null and image != ''">image=#{image},</if>
+            <if test="job != null and job != ''">job=#{job},</if>
+            <if test="gender != null and gender != ''">gender=#{gender},</if>
+            <if test="entrydate != null">entrydate=#{entrydate},</if>
+            <if test="deptId != null">dept_id=#{deptId},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getAllData" resultType="com.example.tliasproject.pojo.Emp">
+        select *
+        from emp
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{name},'%')
+            </if>
+
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="begin != null and end != null">
+                and entrydate between #{begin} and #{end}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+
+
+    <delete id="deleteData">
+        delete
+        from emp
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
